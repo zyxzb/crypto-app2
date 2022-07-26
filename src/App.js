@@ -31,7 +31,7 @@ function App() {
     <Navbar coins={coins} />
     <Routes>
     {/* /crypto-app2/ add for hihhubpages */}
-      <Route path="/crypto-app2/" element={<Coins coins={coins}/>}/>
+      <Route path="/crypto-app2" element={<Coins coins={coins}/>}/>
       <Route path="/coin" element={<Coin/>}>
         <Route path=":coinId" element={<Coin/>} />
       </Route>
