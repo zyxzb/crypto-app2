@@ -6,7 +6,7 @@
     align-items: center;
     background-color: #26272b;
     margin: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
     padding: 1rem 2rem;
     font-weight: 400;
     transition: 0.1s all ease-in-out;
@@ -26,21 +26,60 @@
     }
 
     p {
-        // display: flex;
-        // flex-direction: column;
+        &.rank {
+            width: 40px;
+            height: 25px;
+        }
 
         &.img-symbol {
+            width: 120px;
+            height: 40px;
             display: flex;
             align-items: center;
 
+            img {
+                height: 40px;
+                margin-right: 15px;
+            }
         }
 
-        img {
-            height: 40px;
-            margin-right: 8px;
-            width: auto;
+        &.price {
+            width: 120px;
         }
+
+        &.percentage {
+            width: 80px;
+
+            &.red {
+                color: #e15241;
+            }
+
+            &.green {
+                color: #8dc647;
+            }
+
+        }
+
+        &.cap,
+        &.volume {
+            width: 160px;
+
+        }
+
+        &.cap,
+        &.percentage,
+        &.price,
+        &.volume {
+            text-align: right;
+
+        }
+
+        &.cap,
+        &.price,
+        &.volume {
+            opacity: 0.6;
+        }
+
     }
-
 
 }

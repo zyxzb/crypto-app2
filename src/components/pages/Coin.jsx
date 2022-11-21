@@ -1,37 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import {useParams} from 'react-router-dom';
-import {useState, useEffect} from 'react';
 import DOMPurify from 'dompurify';
+import Loader from '../loader/Loader';
 
-//style
+//styleS
 import './Coin.scss'
 
 const Coin = () => {
     const params = useParams()
-    const [coin,
-        setCoin] = useState({});
+    const [coin, setCoin] = useState([]);
+    const [error, setError] = useState('');
 
     const url = `https://api.coingecko.com/api/v3/coins/${params.coinId}`
 
-    useEffect(() => {
-
-        axios
-            .get(url)
-            .then((response) => {
-
-                setCoin(response.data)
-                console.log(response.data);
-
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }, [])
+    useEffect(()=> {
+        getCoin()
+      },[params])
+    
+      const getCoin = async () => {
+        try {
+          const response = await axios.get(url)
+          setCoin(response.data)
+        } catch(err){
+          setError(`${err}`)
+        }
+      }
 
     return (
-        <div>
+        <>
+        { coin.length !== 0 ? (
             <div className="coin-container">
                 <div className='content'>
                     <h1>{coin.name}</h1>
@@ -58,7 +56,6 @@ const Coin = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="content">
                     <table>
                         <thead>
@@ -103,8 +100,9 @@ const Coin = () => {
                                 {coin.market_data
                                     ? <td>{coin
                                                 .market_data
-                                                .price_change_percentage_1y_in_currency.usd
-                                            }%</td>
+                                                .price_change_percentage_1y_in_currency
+                                                .usd
+                                                .toFixed(2)}%</td>
                                     : null}
                             </tr>
                         </tbody>
@@ -160,17 +158,16 @@ const Coin = () => {
                 <div className="content">
                     <div className="about">
                         <h3>About</h3>
-                        <p
-                            dangerouslySetInnerHTML
-                            ={{
-                            __html: DOMPurify.sanitize(coin.description
-                                ? coin.description.en
-                                : 'null')
-                        }}/>
+                        <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(coin.description ? coin.description.en : 'Error')}}/>
                     </div>
                 </div>
             </div>
-        </div>
+            ) : (
+                <>
+                    {error ? <h2>{error}</h2> : <Loader />}
+                </>
+            )}
+        </>
     );
 }
 

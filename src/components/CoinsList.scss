@@ -1,0 +1,51 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        background-color: #26272b;
+        margin: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+
+        @media (max-width: 768px) {
+            .hide-mobile {
+                display: none;
+            }
+        }
+
+        p {
+            &.rank {
+                width: 40px;
+                height: 25px;
+            }
+
+            &.symbol,
+            &.price {
+                width: 120px;
+            }
+
+            &.percentage {
+                width: 80px;
+            }
+
+            &.cap,
+            &.volume {
+                width: 160px;
+            }
+
+            &.cap,
+            &.percentage,
+            &.price,
+            &.volume {
+                text-align: right;
+
+            }
+        }
+
+    }
+}
