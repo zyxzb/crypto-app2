@@ -29,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Navbar coins={coins}/>
       <Routes>
-        <Route path="/" index element={<CoinsList coins={coins} error={error} setCoins={setCoins}/>}/>
+        <Route path="/" index element={<CoinsList coins={coins} error={error} />}/>
         <Route path=":coinId" element={<Coin/>} />
       </Routes>
     </BrowserRouter>
