@@ -6,7 +6,6 @@ import Coin from "./components/pages/Coin";
 import CoinsList from "./components/CoinsList";
 import {BrowserRouter} from 'react-router-dom';
 
-
 function App() {
   const [coins, setCoins] = useState([]);
   const [error, setError] = useState('');
@@ -30,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Navbar coins={coins}/>
       <Routes>
-        <Route path="/" index element={<CoinsList coins={coins} error={error}/>}/>
+        <Route path="/" index element={<CoinsList coins={coins} error={error} setCoins={setCoins}/>}/>
         <Route path=":coinId" element={<Coin/>} />
       </Routes>
     </BrowserRouter>

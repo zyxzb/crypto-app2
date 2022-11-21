@@ -4,6 +4,7 @@ import Coin from './pages/Coin';
 import CoinItem from './CoinItem';
 import Loader from './loader/Loader'
 import Pagination from './pagination/Pagination';
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 //style
 import './CoinsList.scss'
@@ -11,21 +12,73 @@ import './CoinsList.scss'
 const Coins = ({coins, error}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(50);
+    const [sortedByRank, setSortedByByRank] = useState(false);
+    const [sortedByPrice, setSortedByPrice] = useState(false);
+    const [sortedByPercentage, setSortedByPercentage] = useState(false);
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostindex = lastPostIndex - postsPerPage;
     const currentPost = coins.slice(firstPostindex, lastPostIndex);
+
+    const sortByRank = () => {
+        if(!sortedByRank){
+            coins.sort((a, b) => a.market_cap_rank > b.market_cap_rank ? -1 : 1);
+            setSortedByByRank(true)
+        } else {
+            coins.sort((a, b) => a.market_cap_rank < b.market_cap_rank ? -1 : 1);
+            setSortedByByRank(false)
+        }
+    };
+
+    const sortByPrice = () => {
+        if(!sortedByPrice){
+            coins.sort((a, b) => a.current_price > b.current_price ? -1 : 1);
+            setSortedByPrice(true)
+        } else {
+            coins.sort((a, b) => a.current_price < b.current_price ? -1 : 1);
+            setSortedByPrice(false)
+        }
+    };
+
+    const sortByPercentage = () => {
+        if(!sortedByPercentage){
+            coins.sort((a, b) => a.market_cap_change_percentage_24h > b.market_cap_change_percentage_24h ? -1 : 1);
+            setSortedByPercentage(true)
+        } else {
+            coins.sort((a, b) => a.market_cap_change_percentage_24h < b.market_cap_change_percentage_24h ? -1 : 1);
+            setSortedByPercentage(false)
+        }
+    };
+
     return (
         <>
         {coins.length > 0 ? (
             <div className='container'>
                 <div className='heading'>
-                    <p className='rank'>#</p>
-                    <p className='symbol'>Coin</p>
-                    <p className='price'>Price</p>
-                    <p className='percentage'>24h</p>
-                    <p className='hide-mobile volume'>Volume</p>
-                    <p className='hide-mobile cap'>Mcap</p>
+                    <div className='rank'>
+                        <p onClick={sortByRank} ># 
+                        {sortedByRank ? <TiArrowSortedDown/> : <TiArrowSortedUp/>}
+                        </p>
+                    </div>
+                    <div className='symbol'>
+                        <p>Coin</p>
+                    </div>
+                    <div className='price'>
+                        <p onClick={sortByPrice}>Price
+                        {sortedByPrice ? <TiArrowSortedDown/> : <TiArrowSortedUp/>}
+                        </p>
+                    </div>
+                    <div className='percentage'>
+                        <p onClick={sortByPercentage}>24h
+                        {sortedByPercentage ? <TiArrowSortedDown/> : <TiArrowSortedUp/>}
+                        </p>
+                    </div>
+                    <div className='hide-mobile volume'>
+                        <p>Volume</p>
+                    </div>
+                    <div className='hide-mobile cap'>
+                        <p>Mcap</p>
+                    </div>
                 </div>
                 {currentPost.map((coin) => {
                     return (
