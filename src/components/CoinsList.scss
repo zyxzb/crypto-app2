@@ -1,75 +1,75 @@
 .container {
-    max-width: 1200px;
-    margin: auto;
+  max-width: 1200px;
+  margin: auto;
 
-    .heading {
-        display: flex;
-        justify-content: space-between;
-        background-color: #26272b;
-        margin: 1rem;
-        box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
-        padding: 1rem 2rem;
-        font-weight: 600;
-        border-radius: 8px;
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    background-color: #26272b;
+    margin: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 8px;
 
-        @media (max-width: 768px) {
-            .hide-mobile {
-                display: none;
-            }
+    @media (max-width: 768px) {
+      .hide-mobile {
+        display: none;
+      }
+    }
+
+    div {
+      position: relative;
+
+      &:hover {
+        svg {
+          opacity: 1;
         }
+      }
 
-        div {
-            position: relative;
+      svg {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 4px;
+        opacity: 0.4;
+        transition: opacity 0.2s ease-in-out;
+      }
 
-            &:hover {
-                svg {
-                    opacity: 1;
-                }
-            }
+      &.rank {
+        width: 40px;
+        height: 25px;
+      }
 
-            svg {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                margin-left: 4px;
-                opacity: 0.4;
-                transition: opacity 0.2s ease-in-out;
-            }
+      &.price,
+      &.symbol {
+        width: 120px;
+      }
 
-            &.rank {
-                width: 40px;
-                height: 25px;
-            }
+      &.percentage {
+        width: 80px;
+      }
 
-            &.price,
-            &.symbol {
-                width: 120px;
-            }
+      &.cap,
+      &.volume {
+        width: 160px;
+      }
 
-            &.percentage {
-                width: 80px;
-            }
+      &.cap,
+      &.percentage,
+      &.price,
+      &.volume {
+        text-align: right;
 
-            &.cap,
-            &.volume {
-                width: 160px;
-            }
+      }
 
-            &.cap,
-            &.percentage,
-            &.price,
-            &.volume {
-                text-align: right;
-
-            }
-
-            &.percentage,
-            &.price,
-            &.rank {
-                cursor: pointer;
-            }
-
-        }
+      &.percentage,
+      &.price,
+      &.rank {
+        cursor: pointer;
+      }
 
     }
+
+  }
 }
