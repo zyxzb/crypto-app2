@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCoins } from 'react-icons/fa';
-
+import debounce from 'lodash/debounce';
 //style
 import './Navbar.scss';
 
@@ -26,23 +26,16 @@ const Navbar = ({ coins }) => {
     }
   };
 
-  const debounce = () => {
-    let timeoutID;
-    console.log('debounce called');
-    return (e) => {
-      setLocalSearch(e.target.value);
-      clearTimeout(timeoutID);
-      timeoutID = setTimeout(() => {
-        const matchArray = findMatches(e.target.value, coinsArray);
-        setSearched(matchArray);
-      }, 1000);
-    };
+  const displayMatches = () => {
+    const matchArray = findMatches(localSearch, coinsArray);
+    console.log(matchArray);
+    setSearched(matchArray);
   };
 
-  const optimizedDebounce = useMemo(
-    () => debounce(),
+  const debounceFn = useMemo(
+    () => debounce(displayMatches, 1200),
     // eslint-disable-next-line
-    [],
+    [localSearch],
   );
 
   useEffect(() => {
@@ -66,7 +59,10 @@ const Navbar = ({ coins }) => {
           type='text'
           value={localSearch}
           placeholder='Search...'
-          onChange={optimizedDebounce}
+          onChange={(e) => {
+            setLocalSearch(e.target.value);
+            debounceFn();
+          }}
           onFocus={() => setIsInputFocused(true)}
         />
         <div
@@ -79,7 +75,6 @@ const Navbar = ({ coins }) => {
           {searched.length !== coinsArray.length ? (
             <>
               {searched.map((item) => {
-                console.log(item);
                 return (
                   <ul key={item.id}>
                     <li>
@@ -88,6 +83,7 @@ const Navbar = ({ coins }) => {
                         onClick={() => {
                           setIsInputFocused(false);
                           setLocalSearch('');
+                          setSearched([]);
                         }}
                       >
                         {item.name}
